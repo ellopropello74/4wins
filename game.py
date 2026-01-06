@@ -6,6 +6,7 @@ from pygame.locals import KEYDOWN
 from config import BLACK, BLUE, WHITE
 from connect_game import ConnectGame
 from events import MouseClickEvent, MouseHoverEvent, bus
+from game_board import GameBoard
 from game_data import GameData
 from game_renderer import GameRenderer
 
@@ -27,27 +28,63 @@ def start():
 
     # Processes mouse and keyboard events, dispatching events to the event bus.
     # The events are handled by the ConnectGame and GameRenderer classes.
-    while not game.game_data.game_over:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.quit()
 
-            if event.type == pygame.MOUSEMOTION:
-                bus.emit("mouse:hover", game.renderer, MouseHoverEvent(event.pos[0]))
+            if not game.game_data.game_over:
+                if event.type == pygame.MOUSEMOTION:
+                    bus.emit("mouse:hover", game.renderer, MouseHoverEvent(event.pos[0]))
 
-            pygame.display.update()
+                pygame.display.update()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                bus.emit("mouse:click", game, MouseClickEvent(event.pos[0]))
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    bus.emit("mouse:click", game, MouseClickEvent(event.pos[0]))
 
-            if event.type == KEYDOWN:
-                if event.key == pygame.K_z:
-                    mods: int = pygame.key.get_mods()
-                    if mods & pygame.KMOD_CTRL:
-                        bus.emit("game:undo", game)
+                if event.type == KEYDOWN:
+                    if event.key == pygame.K_z:
+                        mods: int = pygame.key.get_mods()
+                        if mods & pygame.KMOD_CTRL:
+                            bus.emit("game:undo", game)
 
-            game.update()
-            game.draw()
+                game.update()
+                game.draw()
+            else:
+                # Show end menu
+                def restart_game():
+                    game.game_data.game_over = False
+                    game.game_data.turn = 0
+                    game.game_data.last_move_row = []
+                    game.game_data.last_move_col = []
+                    game.game_data.game_board = GameBoard()
+                    game.game_data.action = None
+                    game.print_board()
+                    game.draw()
+                    pygame.display.update()
+
+                def button(msg, x, y, w, h, ic, ac, action=None):
+                    mouse = pygame.mouse.get_pos()
+                    click = pygame.mouse.get_pressed()
+
+                    if x + w > mouse[0] > x and y + h > mouse[1] > y:
+                        pygame.draw.rect(screen, ac, (x, y, w, h))
+
+                        if click[0] == 1 and action != None:
+                            action()
+                    else:
+                        pygame.draw.rect(screen, ic, (x, y, w, h))
+
+                    smallText = pygame.font.SysFont("monospace", 30)
+                    textSurf, textRect = text_objects(msg, smallText, WHITE)
+                    textRect.center = ((x + (w / 2)), (y + (h / 2)))
+                    screen.blit(textSurf, textRect)
+
+                button("RESTART", 150, 450, 200, 50, WHITE, WHITE, restart_game)
+                button("RESTART", 152, 452, 196, 46, BLACK, BLACK, restart_game)
+                button("QUIT", 450, 450, 100, 50, WHITE, WHITE, quit)
+                button("QUIT", 452, 452, 96, 46, BLACK, BLACK, quit)
+                pygame.display.update()
 
 
 def text_objects(text, font, color):
