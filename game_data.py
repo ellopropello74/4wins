@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 
 from game_board import GameBoard
 
@@ -15,8 +15,8 @@ class GameData:
     size: Tuple[int, int]
     game_over: bool
     turn: int
-    last_move_row: [int]
-    last_move_col: [int]
+    last_move_row: List[int]
+    last_move_col: List[int]
     game_board: GameBoard
 
     def __init__(self):
