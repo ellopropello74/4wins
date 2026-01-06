@@ -129,17 +129,30 @@ class GameBoard:
         """
         Checks if the current piece has won the game.
         :param piece: The color of the chip to check for.
-        :return: Whether the current piece has won the game.
+        :return: A list of coordinates of the winning pieces, or None if no win.
         """
         for c in range(self.cols):
             for r in range(self.rows):
-                if (
-                    self.horizontal_win(piece, r, c)
-                    or self.vertical_win(piece, r, c)
-                    or self.diagonal_win(piece, r, c)
-                ):
-                    return True
-        return False
+                if self.horizontal_win(piece, r, c):
+                    return [(r, c), (r, c + 1), (r, c + 2), (r, c + 3)]
+                elif self.vertical_win(piece, r, c):
+                    return [(r, c), (r + 1, c), (r + 2, c), (r + 3, c)]
+                elif self.diagonal_win(piece, r, c):
+                    if (
+                        self.check_square(piece, r, c)
+                        and self.check_square(piece, r + 1, c + 1)
+                        and self.check_square(piece, r + 2, c + 2)
+                        and self.check_square(piece, r + 3, c + 3)
+                    ):
+                        return [(r, c), (r + 1, c + 1), (r + 2, c + 2), (r + 3, c + 3)]
+                    elif (
+                        self.check_square(piece, r, c)
+                        and self.check_square(piece, r - 1, c + 1)
+                        and self.check_square(piece, r - 2, c + 2)
+                        and self.check_square(piece, r - 3, c + 3)
+                    ):
+                        return [(r, c), (r - 1, c + 1), (r - 2, c + 2), (r - 3, c + 3)]
+        return None
 
     def tie_move(self):
         """

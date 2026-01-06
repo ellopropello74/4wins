@@ -62,9 +62,10 @@ class ConnectGame:
 
             self.print_board()
 
-            if self.game_data.game_board.winning_move(self.game_data.turn + 1):
+            winning_pieces = self.game_data.game_board.winning_move(self.game_data.turn + 1)
+            if winning_pieces:
                 bus.emit(
-                    "game:over", self.renderer, GameOver(False, self.game_data.turn + 1)
+                    "game:over", self.renderer, GameOver(False, self.game_data.turn + 1, winning_pieces)
                 )
                 self.game_data.game_over = True
 

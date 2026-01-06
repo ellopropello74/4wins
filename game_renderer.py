@@ -162,6 +162,22 @@ class GameRenderer:
             self.label = self.myfont.render(f"PLAYER {event.winner} WINS!", 1, color)
             self.screen.blit(self.label, (40, 10))
 
+            # Draw the black line through the winning pieces
+            if event.winning_pieces:
+                # Determine the orientation of the winning pieces
+                start_pos = event.winning_pieces[0]
+                end_pos = event.winning_pieces[-1]
+                
+                # Calculate the center positions of the first and last winning pieces
+                # Adjust the y-coordinate to match the actual board position
+                start_x = int(start_pos[1] * self.game_data.sq_size + self.game_data.sq_size / 2)
+                start_y = int(self.game_data.height - (start_pos[0] * self.game_data.sq_size + self.game_data.sq_size / 2))
+                end_x = int(end_pos[1] * self.game_data.sq_size + self.game_data.sq_size / 2)
+                end_y = int(self.game_data.height - (end_pos[0] * self.game_data.sq_size + self.game_data.sq_size / 2))
+                
+                # Draw the line with a thickness of 10 pixels
+                pygame.draw.line(self.screen, BLACK, (start_x, start_y), (end_x, end_y), 10)
+
             mixer.music.load(event_sound)
             mixer.music.play(0)
         else:

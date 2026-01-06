@@ -34,10 +34,12 @@ class GameOver:
     Args:
         was_tie (bool): Whether the game ended in a tie.
         winner (str): The winning side, if any.
+        winning_pieces (list): The coordinates of the winning pieces.
     """
-    def __init__(self, was_tie: bool = True, winner: str = None):
+    def __init__(self, was_tie: bool = True, winner: str = None, winning_pieces: list = None):
         self.was_tie = was_tie
         self.winner = winner
+        self.winning_pieces = winning_pieces
 
 
 class PieceDropEvent:
