@@ -1,6 +1,6 @@
 ## 🖥️ Ausführung in GitHub Codespaces (GUI)
 
-Da dieses Projekt eine grafische Benutzeroberfläche (GUI) nutzt, sind in GitHub Codespaces zusätzliche Schritte erforderlich, um das Fenster im Browser anzuzeigen.
+Wenn du diese Projekt in GitHub Codespaces öffnen möchtest sind zusätzliche Schritte erforderlich, um das Fenster im Browser anzuzeigen.
 
 ### 1. Virtuellen Desktop öffnen
 1. Klicke im VS Code Terminal-Bereich auf den Reiter **Ports**.
