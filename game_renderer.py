@@ -45,12 +45,12 @@ class GameRenderer:
         :param game_data: All of the data for the game.
         """
         self.myfont = pygame.font.SysFont("monospace", 75)
-        self.label = self.myfont.render("CONNECT FOUR!!", 1, WHITE)
+        self.label = self.myfont.render("4wins!!", 1, WHITE)
         screen.blit(self.label, (40, 10))
         self.screen = screen
         self.game_data = game_data
 
-        pygame.display.set_caption("Connect Four | Mayank Singh")
+        pygame.display.set_caption("4wins | Joel Luax")
         pygame.display.update()
 
     @bus.on("mouse:hover")
