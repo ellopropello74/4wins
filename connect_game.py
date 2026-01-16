@@ -11,34 +11,22 @@ from game_renderer import GameRenderer
 
 
 class ConnectGame:
-    """
-    Holds all of the game logic and game data.
-    """
 
     game_data: GameData
     renderer: GameRenderer
 
     def __init__(self, game_data: GameData, renderer: GameRenderer):
-        """
-        Initializes the connect game.
-        :param game_data: A reference to the game data object.
-        :param renderer: A reference to the game renderer.
-        """
+
         self.game_data = game_data
         self.renderer = renderer
 
     def quit(self):
-        """
-        Exits the game.
-        """
+
         sys.exit()
 
     @bus.on("mouse:click")
     def mouse_click(self, event: MouseClickEvent):
-        """
-        Handles a mouse click event.
-        :param event: Data about the mouse click
-        """
+
         pygame.draw.rect(
             self.renderer.screen,
             BLACK,
@@ -76,11 +64,7 @@ class ConnectGame:
 
     @bus.on("game:undo")
     def undo(self):
-        """
-        Handles the Ctrl+Z keyboard sequence, which
-        is used to roll back the last move.
-        :return:
-        """
+
         if self.game_data.last_move_row:
             self.game_data.game_board.drop_piece(
                 self.game_data.last_move_row.pop(),
@@ -92,9 +76,7 @@ class ConnectGame:
         self.game_data.turn = self.game_data.turn % 2
 
     def update(self):
-        """
-        Checks the game state, dispatching events as needed.
-        """
+
         if self.game_data.game_board.tie_move():
             bus.emit("game:over", self.renderer, GameOver(was_tie=True))
 
@@ -105,13 +87,9 @@ class ConnectGame:
             pygame.time.wait(1000)
 
     def draw(self):
-        """
-        Directs the game renderer to 'render' the game state to the audio and video devices.
-        """
+
         self.renderer.draw(self.game_data)
 
     def print_board(self):
-        """
-        Prints the state of the board to the console.
-        """
+
         self.game_data.game_board.print_board()
