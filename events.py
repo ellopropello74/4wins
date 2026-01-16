@@ -18,7 +18,7 @@ class MouseClickEvent:
 
 class GameOver:
 
-    """
+
     def __init__(self, was_tie: bool = True, winner: str = None, winning_pieces: list = None):
         self.was_tie = was_tie
         self.winner = winner
