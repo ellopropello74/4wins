@@ -14,6 +14,7 @@ class GameData:
     sq_size: int
     size: Tuple[int, int]
     game_over: bool
+    paused: bool
     turn: int
     last_move_row: List[int]
     last_move_col: List[int]
@@ -21,6 +22,7 @@ class GameData:
 
     def __init__(self):
         self.game_over = False
+        self.paused = False
         self.turn = 0
         self.last_move_row = []
         self.last_move_col = []
