@@ -21,7 +21,7 @@ def quit():
 
 def main_menu(screen):
     screen.fill(BLACK)
-    message_display(screen, "CONNECT FOUR!!", WHITE, 350, 150, 75)
+    message_display(screen, "4wins!!", WHITE, 350, 150, 75)
     message_display(screen, "HAVE FUN!", (23, 196, 243), 350, 300, 75)
     pygame.display.update()
     return MENU
@@ -178,7 +178,7 @@ def main():
     pygame.init()
     data = GameData()
     screen = pygame.display.set_mode(data.size)
-    pygame.display.set_caption("Connect Four | Joel Laux")
+    pygame.display.set_caption("4wins| Joel Laux")
 
     state = MENU
     game = None
