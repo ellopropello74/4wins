@@ -73,6 +73,7 @@ def message_display(screen, text, color, p, q, v):
     screen.blit(TextSurf, TextRect)
 
 def show_pause_menu(screen, game, data):
+    screen.fill(BLACK)
     next_state = None
     while next_state is None:
         for event in pygame.event.get():
@@ -127,6 +128,7 @@ def show_pause_menu(screen, game, data):
     return next_state
 
 def show_end_menu(screen, game, data):
+    screen.fill(BLACK)
     next_state = None
     while next_state is None:
         for event in pygame.event.get():
