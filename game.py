@@ -178,7 +178,7 @@ def main():
     pygame.init()
     data = GameData()
     screen = pygame.display.set_mode(data.size)
-    pygame.display.set_caption("Connect Four | Mayank Singh")
+    pygame.display.set_caption("Connect Four | Joel Laux")
 
     state = MENU
     game = None
