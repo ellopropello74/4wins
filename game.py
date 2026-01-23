@@ -97,6 +97,13 @@ def show_pause_menu(screen, game, data):
             return PLAYING
 
         def back_to_menu():
+            data.game_over = False
+            data.paused = False
+            data.turn = 0
+            data.last_move_row = []
+            data.last_move_col = []
+            data.game_board = GameBoard()
+            data.action = None
             return MENU
 
         def button(msg, x, y, w, h, ic, ac, action=None):
@@ -109,6 +116,7 @@ def show_pause_menu(screen, game, data):
 
                 if click[0] == 1 and action is not None:
                     next_state = action()
+                    pygame.time.wait(200)  # Prevent multiple clicks
             else:
                 pygame.draw.rect(screen, ic, (x, y, w, h))
 
@@ -147,6 +155,13 @@ def show_end_menu(screen, game, data):
             return PLAYING
 
         def back_to_menu():
+            data.game_over = False
+            data.paused = False
+            data.turn = 0
+            data.last_move_row = []
+            data.last_move_col = []
+            data.game_board = GameBoard()
+            data.action = None
             return MENU
 
         def button(msg, x, y, w, h, ic, ac, action=None):
@@ -159,6 +174,7 @@ def show_end_menu(screen, game, data):
 
                 if click[0] == 1 and action is not None:
                     next_state = action()
+                    pygame.time.wait(200)  # Prevent multiple clicks
             else:
                 pygame.draw.rect(screen, ic, (x, y, w, h))
 
@@ -185,9 +201,10 @@ def main():
 
     while True:
         if state == MENU:
+            # Zeige Hauptmenü
             state = main_menu(screen)
             if state == MENU:
-                # Wait for button click
+                # Warte auf Button-Click
                 running = True
                 while running:
                     for event in pygame.event.get():
@@ -204,7 +221,8 @@ def main():
                             if click[0] == 1 and action is not None:
                                 nonlocal running
                                 running = False
-                                action()
+                                if action is not None:
+                                    action()
                         else:
                             pygame.draw.rect(screen, ic, (x, y, w, h))
 

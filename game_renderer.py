@@ -16,10 +16,6 @@ from game_data import GameData
 
 @bus.on("piece:drop")
 def on_piece_drop(event: PieceDropEvent):
-    """
-    Plays a sound when a piece is dropped over an empty slot.
-    :param event: Information about the drop, namely the slot where the piece was dropped.
-    """
     if event.side == 1:
         mixer.music.load(disc_drop_1)
         mixer.music.play(0)
@@ -30,35 +26,23 @@ def on_piece_drop(event: PieceDropEvent):
 
 
 class GameRenderer:
-    """
-    Renders the current game state to the screen and the speakers.
-    """
 
     game_data: GameData
     label: Optional[Any]
     myfont: Union[None, Font, FontType]
 
     def __init__(self, screen, game_data: GameData):
-        """
-        Initializes the game renderer.
-        :param screen: The screen.
-        :param game_data: All of the data for the game.
-        """
         self.myfont = pygame.font.SysFont("monospace", 75)
         self.label = self.myfont.render("4wins!!", 1, WHITE)
         screen.blit(self.label, (40, 10))
         self.screen = screen
         self.game_data = game_data
 
-        pygame.display.set_caption("4wins | Joel Luax")
+        pygame.display.set_caption("4wins | Joel Laux")
         pygame.display.update()
 
     @bus.on("mouse:hover")
     def on_mouse_move(self, event: MouseHoverEvent):
-        """
-        Draws a coin over the slot that the mouse is positioned.
-        :param event: Information about the hover, namely the x position
-        """
         posx = event.posx
 
         pygame.draw.rect(
@@ -71,48 +55,21 @@ class GameRenderer:
         )
 
     def draw_red_coin(self, x, y):
-        """
-        Draws a red coin.
-        :param x: The x position to draw the coin.
-        :param y: The y position to draw the coin.
-        """
         self.screen.blit(red_coin, (x, y))
 
     def draw_yellow_coin(self, x, y):
-        """
-        Draws a yellow coin.
-        :param x: The x position to draw the coin.
-        :param y: The y position to draw the coin.
-        """
         self.screen.blit(yellow_coin, (x, y))
 
     def draw_black_coin(self, x, y):
-        """
-        Draws a black coin.
-        :param x: The x position to draw the coin.
-        :param y: The y position to draw the coin.
-        """
         self.screen.blit(black_coin, (x, y))
 
     def draw_coin(self, game_data, x, y):
-        """
-        Draws a coin to the specified position
-        using the color of the current player.
-
-        :param game_data: All of the data for the game.
-        :param x: The x position for the coin to be drawn.
-        :param y: The y position for the coin to be drawn.
-        """
         if game_data.turn == 0:
             self.screen.blit(red_coin, (x, y))
         else:
             self.screen.blit(yellow_coin, (x, y))
 
     def draw(self, game_data: GameData):
-        """
-        Draws the game state, including the board and the pieces.
-        :param game_data: All of the data associated with the game.
-        """
         if game_data.action == "undo":
             filled_circle(
                 self.screen,
@@ -147,10 +104,6 @@ class GameRenderer:
 
     @bus.on("game:over")
     def on_game_over(self, event: GameOver):
-        """
-        Handles a game over event.
-        :param event: Data about how the game ended.
-        """
         color = None
 
         if event.winner == 1:
@@ -188,10 +141,6 @@ class GameRenderer:
             self.screen.blit(self.label, (40, 10))
 
     def draw_board(self, board):
-        """
-        Draws the game board to the screen.
-        :param board: The game board.
-        """
         sq_size = 100
         height = 700
         radius = int(sq_size / 2 - 5)
