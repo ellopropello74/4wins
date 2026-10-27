@@ -98,7 +98,6 @@ class GameBoard:
         return simulated
 
     def check_square(self, piece: int, row: int, col: int) -> bool:
-        """Return whether the in-bounds cell contains ``piece``."""
         return (
             0 <= row < self.rows
             and 0 <= col < self.cols
