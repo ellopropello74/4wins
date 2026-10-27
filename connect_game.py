@@ -11,7 +11,6 @@ from game_renderer import GameRenderer
 
 
 class ConnectGame:
-    """Coordinate the board rules, GUI renderer, and existing event bus."""
 
     game_data: GameData
     renderer: GameRenderer
@@ -35,7 +34,6 @@ class ConnectGame:
         self.play_move(col)
 
     def play_move(self, col: int) -> bool:
-        """Apply a column move for the current player; return whether it was legal."""
         board = self.game_data.game_board
         if self.game_data.game_over or self.game_data.paused:
             return False
@@ -68,12 +66,7 @@ class ConnectGame:
         return True
 
     def choose_ai_move(self, ai_player: AIPlayer, difficulty: Difficulty) -> int:
-        """Ask an AI for a move using a detached board and return its column.
-
-        The real board is never passed to AI code. Raises ``ValueError`` for an
-        unsupported difficulty or illegal response and ``RuntimeError`` after
-        the game has ended.
-        """
+        
         if self.game_data.game_over or self.game_data.game_board.is_terminal():
             raise RuntimeError("cannot ask for an AI move after the game has ended")
         if difficulty not in DIFFICULTIES:
@@ -101,7 +94,7 @@ class ConnectGame:
         self.draw()
 
     def update(self):
-        """Kept for the existing GUI loop; terminal checks happen on each move."""
+        ...
 
     def draw(self):
         self.renderer.draw(self.game_data)

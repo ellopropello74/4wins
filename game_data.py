@@ -33,5 +33,4 @@ class GameData:
 
     @property
     def current_player(self) -> int:
-        """Player whose move is next: 1 (red) or 2 (yellow)."""
         return self.turn + 1

@@ -5,7 +5,6 @@ from pygame.image import load
 
 
 def resource_path(relative_path):
-    """Resolve bundled assets independently of the process working directory."""
     base_path = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
     return str(base_path / relative_path)
 
