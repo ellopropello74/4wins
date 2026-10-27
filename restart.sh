@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 game.py &
+python3 main.py &

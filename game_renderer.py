@@ -70,36 +70,6 @@ class GameRenderer:
             self.screen.blit(yellow_coin, (x, y))
 
     def draw(self, game_data: GameData):
-        if game_data.action == "undo":
-            filled_circle(
-                self.screen,
-                game_data.last_move_row,
-                game_data.last_move_col,
-                self.game_data.radius,
-                BLACK,
-            )
-
-            aacircle(
-                self.screen,
-                game_data.last_move_row,
-                game_data.last_move_col,
-                self.game_data.radius,
-                BLACK,
-            )
-
-            self.draw_black_coin(
-                game_data.last_move_col * self.game_data.sq_size + 5,
-                self.game_data.height
-                - (
-                    game_data.last_move_row * self.game_data.sq_size
-                    + self.game_data.sq_size
-                    - 5
-                ),
-            )
-
-            game_data.game_board.print_board()
-            game_data.action = None
-
         self.draw_board(game_data.game_board)
 
     @bus.on("game:over")
@@ -141,8 +111,9 @@ class GameRenderer:
             self.screen.blit(self.label, (40, 10))
 
     def draw_board(self, board):
+
         sq_size = 100
-        height = 700
+        height = self.game_data.height
         radius = int(sq_size / 2 - 5)
 
         for c in range(board.cols):

@@ -33,6 +33,11 @@ def play_game(screen, game, data):
     pygame.time.wait(1000)
 
     while True:
+        if data.game_over:
+            return GAME_OVER
+        if data.paused:
+            return PAUSED
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.quit()
@@ -53,8 +58,8 @@ def play_game(screen, game, data):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     bus.emit("mouse:click", game, MouseClickEvent(event.pos[0]))
 
-                game.update()
-                game.draw()
+                if data.game_over:
+                    return GAME_OVER
             elif data.game_over:
                 return GAME_OVER
             elif data.paused:

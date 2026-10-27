@@ -1,4 +1,4 @@
-from typing import Tuple, List
+from typing import Tuple
 
 from game_board import GameBoard
 
@@ -12,8 +12,8 @@ class GameData:
     game_over: bool
     paused: bool
     turn: int
-    last_move_row: List[int]
-    last_move_col: List[int]
+    last_move_row: list[int]
+    last_move_col: list[int]
     game_board: GameBoard
 
     def __init__(self):
@@ -30,3 +30,8 @@ class GameData:
         self.height: int = 7 * self.sq_size
         self.size: Tuple[int, int] = (self.width, self.height)
         self.radius: int = int(self.sq_size / 2 - 5)
+
+    @property
+    def current_player(self) -> int:
+        """Player whose move is next: 1 (red) or 2 (yellow)."""
+        return self.turn + 1

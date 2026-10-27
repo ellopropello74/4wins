@@ -18,3 +18,9 @@ venv/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Ignore things from pyinstaller
+dist/
+build/
+*.spec
+!game.spec
